@@ -11,13 +11,19 @@ import java.util.List;
  */
 public class CityService {
 
-    public static List<City> search(String command) {
+    private static List<City> cities;
+
+    public static void loadCitiesData() {
+        cities = FileUtils.loadCitiesData();
+    }
+
+    public static List<City> filter(String command) {
         List<City> result = new ArrayList<>();
         String property = buildPropertyName(command);
         String value = buildFilterValue(property, command);
         try {
             Method method = new City().getClass().getDeclaredMethod(buildMethodName(property), null);
-            for (City city : Main.cities) {
+            for (City city : cities) {
                 String cityValue = (String) method.invoke(city, null);
                 if (isMatch(value, cityValue)) {
                     result.add(city);
@@ -32,14 +38,14 @@ public class CityService {
     }
 
     public static long count() {
-        return Main.cities.size();
+        return cities.size();
     }
 
-    public static long countDistinct(String property) throws NoSuchMethodException {
+    public static long countDistinct(String property) {
         HashSet<String> itens = new HashSet<>();
         try {
             Method method = new City().getClass().getDeclaredMethod(buildMethodName(property), null);
-            for (City city : Main.cities) {
+            for (City city : cities) {
                 String cityValue = (String) method.invoke(city, null);
                 itens.add(cityValue);
             }

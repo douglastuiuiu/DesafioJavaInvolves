@@ -31,7 +31,7 @@ public class FileUtils {
         return result;
     }
 
-    private static City parseCityData(String[] columns) {
+    public static City parseCityData(String[] columns) {
         City city = new City();
         city.setIbgeid(columns[0]);
         city.setUf(columns[1]);

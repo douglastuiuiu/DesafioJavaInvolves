@@ -10,13 +10,12 @@ import java.util.Map;
 /**
  * Created by douglasg on 06/01/2017.
  */
-public class Main {
-
-    static List<City> cities;
+public class Desafio {
 
     public static void main(String[] args) {
 
-        cities = FileUtils.loadCitiesData();
+        CityService.loadCitiesData();
+
         Map<CommandEnum, String> commands = new HashMap<>();
         commands.put(CommandEnum.COUNT, "count *");
         commands.put(CommandEnum.DISTINCT_COUNT, "count distinct");
@@ -34,7 +33,7 @@ public class Main {
                 if (command.equalsIgnoreCase(commands.get(CommandEnum.COUNT))) {
                     System.out.println("RESULT:" + CityService.count());
                 } else if (command.contains(commands.get(CommandEnum.FILTER).toLowerCase())) {
-                    List<City> result = CityService.search(command);
+                    List<City> result = CityService.filter(command);
                     System.out.println("RESULT:");
                     for (City city : result) {
                         System.out.println(city);
